@@ -9,12 +9,7 @@ from langchain.prompts.chat import (AIMessagePromptTemplate,
                                     SystemMessagePromptTemplate)
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
-def approve(type, request):
-    #  switch case
-    return "Error approving."
-
-
-def run(message, history):
+def analyze(instruction, text):
 
     chat = ChatOpenAI(temperature=0)
 
@@ -23,26 +18,14 @@ def run(message, history):
             content="""
       You are InformationExtractorGPT. Your job is to parse information out of the user's text based on the following instructions:
 
-      Instructions: """ + os.environ["instructions"] + """
+      Instructions: """ + instruction + """
 
       Respond only with markdown-formatted text. 
       """)
     ]
 
-    messages.append(HumanMessage(content=message))
+    messages.append(HumanMessage(content=text))
 
     res = chat(messages)
 
     return res.content
-
-
-def setup(config):
-    try:
-        os.environ["OPENAI_API_KEY"] = config["OPENAI_API_KEY"]
-        os.environ["instructions"] = config["intructions"]
-        print("Setup complete.")
-    # print error
-    except KeyError:
-        print("Error setting up.")
-        exit()
-
