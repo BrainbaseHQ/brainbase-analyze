@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify, g
 from functools import wraps
-from src.index import run, setup, approve
+from src.index import analyze
 from flask_cors import CORS
-from memory import create_or_update_db, get_history_from_db, update_history_in_db
-from logs import update_logs_in_db, get_logs_from_db, create_or_update_logs_db
 import sqlite3
 import threading
 import requests
@@ -14,25 +12,6 @@ import time
 
 app = Flask(__name__)
 CORS(app)
-
-""" 
-    Logger to log messages to the console.
-"""
-LOG_DATABASE = "log.db"
-
-""" 
-    Database to save chat history.
-"""
-DATABASE = "chat_history.db"
-
-# Load the config.json file
-with open("app/src/config.json", "r") as file:
-    config_data = json.load(file)
-    
-print("config data", config_data)
-
-# Extract the inputs array
-inputs = config_data["inputs"]
 
 @app.route('/')
 def hello_world():
