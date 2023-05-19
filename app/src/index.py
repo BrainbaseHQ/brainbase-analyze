@@ -9,7 +9,7 @@ from langchain.prompts.chat import (AIMessagePromptTemplate,
                                     SystemMessagePromptTemplate)
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
-def analyze(instruction, text):
+def analyze(instructions, text):
 
     chat = ChatOpenAI(temperature=0)
 
@@ -18,7 +18,7 @@ def analyze(instruction, text):
             content="""
       You are InformationExtractorGPT. Your job is to parse information out of the user's text based on the following instructions:
 
-      Instructions: """ + instruction + """
+      Instructions: """ + instructions + """
 
       Respond only with markdown-formatted text. 
       """)
