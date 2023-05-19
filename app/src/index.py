@@ -18,9 +18,25 @@ def analyze(instructions, text):
             content="""
       You are InformationExtractorGPT. Your job is to parse information out of the user's text based on the following instructions:
 
-      Instructions: """ + instructions + """
+      Instructions: """ + os.environ["instructions"] + """
 
-      Respond only with markdown-formatted text. 
+      Respond only with JSON in the following format:
+
+      {{
+        fields: {{
+            "field_1": "Field 1",
+            "field_2": "Field 2",
+            "field_3": "Field 3",
+            ...
+        }},
+        json: {{
+            "field_1": ...,
+            "field_2": ...,
+            "field_3": ...,
+            ...
+        }},
+        error: "Error message" || null  # if there is an error, return an error message
+      }}
       """)
     ]
 
