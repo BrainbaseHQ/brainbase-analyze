@@ -39,8 +39,8 @@ def hello_world():
 def handle_analyze():
     try:
         text = request.json['text']
-        instruction = request.json['instruction']
-        response = run(instruction=instruction, text=text)
+        instruction = request.json['instructions']
+        response = run(instructions=instructions, text=text)
 
         return jsonify(response)
     except Exception as e:
